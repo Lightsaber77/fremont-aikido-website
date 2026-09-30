@@ -1,0 +1,10 @@
+const nav = document.querySelector('nav');
+const menu = document.querySelector('.menu-toggle');
+menu.addEventListener('click', () => { const open = nav.classList.toggle('open'); menu.setAttribute('aria-expanded', open); menu.querySelector('span').textContent = open ? '−' : '+'; });
+document.querySelectorAll('nav a, nav button').forEach(item => item.addEventListener('click', () => { nav.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); menu.querySelector('span').textContent = '+'; }));
+document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('.tab').forEach(item => { item.classList.remove('active'); item.setAttribute('aria-selected', 'false'); }); document.querySelectorAll('.times').forEach(item => item.classList.remove('active')); tab.classList.add('active'); tab.setAttribute('aria-selected', 'true'); document.querySelector(`[data-panel="${tab.dataset.tab}"]`).classList.add('active'); }));
+const dialog = document.querySelector('.trial-dialog');
+document.querySelectorAll('.js-trial').forEach(button => button.addEventListener('click', () => dialog.showModal()));
+document.querySelector('.close').addEventListener('click', () => dialog.close());
+dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+document.querySelector('.trial-form').addEventListener('submit', event => { event.preventDefault(); const form = event.currentTarget; const data = new FormData(form); const subject = encodeURIComponent(`Free class inquiry — ${data.get('class')}`); const body = encodeURIComponent(`Name: ${data.get('name')}\nEmail: ${data.get('email')}\nPreferred class: ${data.get('class')}`); form.querySelector('.form-note').innerHTML = `Ready to send: <a href="mailto:FremontAikido@gmail.com?subject=${subject}&body=${body}">email Fremont Aikido ↗</a>`; });
